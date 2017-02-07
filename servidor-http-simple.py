@@ -16,7 +16,7 @@ import socket
 # let's use one above 1024
 
 mySocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-mySocket.bind(('localhost', 1234))
+mySocket.bind(('localhost', 1235))
 
 # Queue a maximum of 5 TCP connection requests
 
@@ -26,11 +26,12 @@ mySocket.listen(5)
 #  (in an infinite loop)
 
 while True:
-    print 'Waiting for connections'
+    print ('Waiting for connections')
     (recvSocket, address) = mySocket.accept()
-    print 'HTTP request received:'
-    print recvSocket.recv(1024)
-    recvSocket.send("HTTP/1.1 200 OK\r\n\r\n" +
-                    "<html><body><h1>Hello World!</h1></body></html>" +
-                    "\r\n")
+    print ('HTTP request received:')
+    print (recvSocket.recv(1024))
+    recvSocket.send(bytes("HTTP/1.1 200 OK\r\n\r\n" +
+                    "<html><body><h1>Hello World!" +
+                    "</h1></body></html>" +
+                    "\r\n", "utf-8"))
     recvSocket.close()
